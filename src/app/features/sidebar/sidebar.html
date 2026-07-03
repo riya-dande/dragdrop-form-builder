@@ -1,0 +1,33 @@
+<aside class="sidebar">
+  <div class="sidebar-brand">Builder</div>
+
+  <nav class="sidebar-nav" aria-label="Main navigation">
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="sidebar-link">
+      <i class="pi pi-th-large"></i>
+      <span>Dashboard</span>
+    </a>
+
+    <a
+      *ngIf="auth.hasRole('admin')"
+      routerLink="/users"
+      routerLinkActive="active"
+      class="sidebar-link">
+      <i class="pi pi-users"></i>
+      <span>Users</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button
+      type="button"
+      class="sidebar-signout"
+      (click)="signOutClicked.emit()">
+      <i class="pi pi-sign-out"></i>
+      <span>Logout</span>
+    </button>
+  </div>
+</aside>

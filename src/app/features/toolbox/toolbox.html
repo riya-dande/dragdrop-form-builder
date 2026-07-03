@@ -1,0 +1,35 @@
+<h3 class="toolbox-title">Toolbox</h3>
+
+<div
+  cdkDropList
+  id="toolboxDropList"
+  class="toolbox-list"
+  [cdkDropListData]="toolboxItems"
+  [cdkDropListConnectedTo]="['canvasDropList']"
+>
+  <div
+    class="toolbox-item"
+    [class.toolbox-item-text]="item.type === 'text'"
+    [class.toolbox-item-date]="item.type === 'date'"
+    [class.toolbox-item-number]="item.type === 'number'"
+    [class.toolbox-item-checkbox]="item.type === 'checkbox'"
+    [class.toolbox-item-dropdown]="item.type === 'dropdown'"
+    *ngFor="let item of toolboxItems"
+    cdkDrag
+    [cdkDragData]="item.type"
+    (dblclick)="addField(item.type)"
+  >
+    <span class="toolbox-icon" aria-hidden="true">
+      <i *ngIf="item.type === 'text'" class="pi pi-align-left"></i>
+      <i *ngIf="item.type === 'date'" class="pi pi-calendar"></i>
+      <i *ngIf="item.type === 'number'" class="pi pi-hashtag"></i>
+      <i *ngIf="item.type === 'checkbox'" class="pi pi-check-square"></i>
+      <i *ngIf="item.type === 'dropdown'" class="pi pi-chevron-down"></i>
+    </span>
+
+    <span class="toolbox-copy">
+      <strong>{{ item.label }}</strong>
+      <small>Drag or double click</small>
+    </span>
+  </div>
+</div>

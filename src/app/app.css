@@ -1,0 +1,23 @@
+.app-frame {
+  min-height: 100vh;
+  background: var(--app-bg);
+}
+
+.app-content {
+  min-height: 100vh;
+}
+
+.app-body {
+  min-height: 100vh;
+}
+
+.app-body.with-sidebar {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr);
+}
+
+@media (max-width: 720px) {
+  .app-body.with-sidebar {
+    grid-template-columns: 1fr;
+  }
+}

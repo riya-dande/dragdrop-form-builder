@@ -1,0 +1,65 @@
+<section class="auth-page">
+  <div class="auth-panel">
+    <p class="eyebrow">Create Account</p>
+    <h1>Sign up</h1>
+
+    <p class="hint">
+      Register your email and password, then use the same details to login.
+    </p>
+
+    <form class="login-form" (ngSubmit)="signUp()" novalidate>
+      <label>
+        <span>Email</span>
+        <input
+          pInputText
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          (ngModelChange)="clearError()"
+          autocomplete="email"
+          required />
+      </label>
+
+      <label>
+        <span>Password</span>
+        <input
+          pInputText
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          (ngModelChange)="clearError()"
+          autocomplete="new-password"
+          required />
+      </label>
+
+      <label>
+        <span>Confirm password</span>
+        <input
+          pInputText
+          type="password"
+          name="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          (ngModelChange)="clearError()"
+          autocomplete="new-password"
+          required />
+      </label>
+
+      <p class="login-error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </p>
+
+      <button
+        pButton
+        type="submit"
+        label="Create account"
+        icon="pi pi-user-plus"
+        [disabled]="isSubmitting">
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      Already have an account?
+      <a routerLink="/auth">Login</a>
+    </p>
+  </div>
+</section>

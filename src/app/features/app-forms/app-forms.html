@@ -1,0 +1,68 @@
+<section class="app-forms">
+  <header class="page-header">
+    <div>
+      <p class="breadcrumb">
+        <span>Design Tools</span>
+        <span>&gt;</span>
+        <a routerLink="/dashboard">Apps</a>
+        <span>&gt;</span>
+        <span>{{ app?.name || 'App' }}</span>
+      </p>
+    </div>
+  </header>
+
+  <section class="data-panel">
+    <div class="table-toolbar">
+      <div class="toolbar-actions">
+        <span>{{ responses.length }} Rows</span>
+        <a
+          pButton
+          *ngIf="createResponseLink"
+          (click)="openGeneratedForm()"
+          label="Create"
+          class="create-btn">
+        </a>
+      </div>
+    </div>
+
+    <p class="empty" *ngIf="forms.length === 0">
+      No forms saved in this app yet. Create a form first.
+    </p>
+
+    <div class="table-wrap" *ngIf="forms.length > 0 && selectedForm">
+      <table>
+        <thead>
+          <tr>
+            <th *ngFor="let field of fields">
+              {{ field.label || field.type }}
+            </th>
+            <th>Submitted At</th>
+            <th class="actions-cell">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngIf="responses.length === 0">
+            <td [attr.colspan]="fields.length + 2" class="empty-row">
+              No data entered yet. Click Create to fill this generated form.
+            </td>
+          </tr>
+
+          <tr *ngFor="let response of responses">
+            <td *ngFor="let field of fields">
+              {{ formatValue(response, field) }}
+            </td>
+            <td>{{ response.submittedAt | date: 'dd/MM/yyyy, h:mm a' }}</td>
+            <td class="actions-cell">
+              <a [routerLink]="getEditResponseLink(response)" class="action-icon">Edit</a>
+              <a [routerLink]="getViewResponseLink(response)" class="action-icon">View</a>
+              <button type="button" class="action-icon action-delete" (click)="deleteResponse(response.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</section>

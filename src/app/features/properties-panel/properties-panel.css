@@ -1,0 +1,95 @@
+:host {
+  display: block;
+}
+
+.empty {
+  color: var(--muted-text);
+  font-weight: 700;
+}
+
+.properties-form {
+  display: grid;
+  gap: 28px;
+}
+
+.property-group {
+  display: grid;
+  gap: 10px;
+}
+
+.property-label {
+  color: var(--text);
+  font-weight: 850;
+}
+
+.field-type {
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  background: #eff6ff;
+}
+
+.field-type strong {
+  color: var(--primary);
+  font-size: 0.95rem;
+  font-weight: 850;
+}
+
+:host ::ng-deep .property-input.p-inputtext,
+:host ::ng-deep .p-inputtext {
+  width: 100%;
+  height: 46px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  box-shadow: none;
+}
+
+:host ::ng-deep .property-input.p-inputtext:enabled:focus,
+:host ::ng-deep .p-inputtext:enabled:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.dropdown-items {
+  display: grid;
+  gap: 12px;
+}
+
+.dropdown-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.add-option {
+  justify-self: start;
+}
+
+:host ::ng-deep .add-option.p-button {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--surface);
+  font-weight: 800;
+}
+
+:host ::ng-deep .add-option.p-button:not(:disabled):hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  font-weight: 700;
+}
+
+:host ::ng-deep .p-checkbox-box {
+  border-color: var(--border);
+}

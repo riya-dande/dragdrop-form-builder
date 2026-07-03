@@ -1,0 +1,60 @@
+<div class="builder-layout">
+  <aside class="toolbox">
+    <app-toolbox
+      (fieldAdded)="addField($event)">
+    </app-toolbox>
+  </aside>
+
+  <main class="designer-area">
+    <header class="designer-header">
+      <h1 class="designer-title">Application name</h1>
+
+      <div class="form-name-control">
+        <input
+          pInputText
+          class="form-name-input"
+          type="text"
+          [(ngModel)]="formName"
+          (ngModelChange)="formNameError = ''"
+          placeholder="Form name"
+          [class.invalid]="formNameError" />
+
+        <small *ngIf="formNameError">
+          {{ formNameError }}
+        </small>
+      </div>
+    </header>
+
+    <div class="canvas-wrapper">
+      <app-canvas
+        [fields]="fields"
+        [selectedField]="selectedField"
+        [fieldLabelErrors]="fieldLabelErrors"
+        (fieldSelected)="selectField($event)"
+        (fieldDoubleClicked)="selectField($event)"
+        (fieldDropped)="addField($event)"
+        (fieldDeleted)="deleteField($event)"
+        (fieldLabelChanged)="clearFieldLabelError($event)">
+      </app-canvas>
+    </div>
+  </main>
+
+  <aside class="properties-panel">
+    <header class="properties-header">
+      <h3>Properties</h3>
+
+      <button
+        pButton
+        type="button"
+        label="Save Form"
+        class="save-btn"
+        (click)="saveForm()"
+        [disabled]="fields.length === 0">
+      </button>
+    </header>
+
+    <app-properties-panel
+      [selectedField]="selectedField">
+    </app-properties-panel>
+  </aside>
+</div>

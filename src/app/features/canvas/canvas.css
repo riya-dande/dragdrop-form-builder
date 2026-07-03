@@ -1,0 +1,187 @@
+.canvas-wrapper {
+  display: grid;
+  align-content: start;
+  gap: 26px;
+  min-height: 540px;
+  padding: 34px 32px;
+  border: 1.5px dashed #9fb4d7;
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.02);
+}
+
+.empty {
+  display: grid;
+  min-height: 160px;
+  margin: 0;
+  place-items: center;
+  color: var(--muted-text);
+  font-weight: 700;
+  text-align: center;
+}
+
+.field-card {
+  position: relative;
+  display: grid;
+  gap: 16px;
+  padding: 64px 28px 26px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  cursor: grab;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.field-card:hover {
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.field-card:active {
+  cursor: grabbing;
+}
+
+.field-card.selected {
+  border-color: var(--primary);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+}
+
+.field-actions {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+:host ::ng-deep .field-actions .p-button {
+  width: 30px;
+  height: 30px;
+  color: var(--primary);
+}
+
+:host ::ng-deep .field-actions .p-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.85fr) minmax(260px, 1.15fr);
+  align-items: start;
+  gap: 30px;
+}
+
+.label-only-preview .label-control {
+  grid-column: 1 / -1;
+  max-width: 520px;
+}
+
+.label-control {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.field-input {
+  width: 100%;
+  min-width: 0;
+}
+
+:host ::ng-deep .field-card .field-input.p-inputtext {
+  width: 100%;
+  height: 42px;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 2px solid #64748b;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 650;
+  box-shadow: none;
+}
+
+:host ::ng-deep .field-card .field-input.p-inputtext::placeholder {
+  color: var(--muted-text);
+  font-weight: 500;
+  opacity: 1;
+}
+
+:host ::ng-deep .field-card .field-input.p-inputtext:enabled:focus {
+  border-bottom-color: var(--primary);
+  box-shadow: none;
+}
+
+:host ::ng-deep .field-card .field-input.p-inputtext.invalid-label,
+:host ::ng-deep .field-card .field-input.p-inputtext.invalid-label:enabled:focus {
+  border-bottom-color: var(--danger);
+}
+
+.label-error {
+  color: var(--danger);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.value-preview {
+  pointer-events: none;
+}
+
+.select-preview,
+.date-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 42px;
+  padding: 8px 0;
+  border-bottom: 2px solid var(--border);
+  color: var(--muted-text);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.date-preview {
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.select-preview i,
+.date-preview i {
+  color: var(--primary);
+  font-size: 0.95rem;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.16);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.35;
+}
+
+.cdk-drop-list-dragging .field-card:not(.cdk-drag-placeholder) {
+  transition: transform 180ms ease;
+}
+
+@media (max-width: 760px) {
+  .canvas-wrapper {
+    min-height: 420px;
+    padding: 16px;
+  }
+
+  .field-card {
+    padding: 52px 16px 18px;
+  }
+
+  .field-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

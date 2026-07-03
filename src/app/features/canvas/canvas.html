@@ -1,0 +1,93 @@
+<div
+  class="canvas-wrapper"
+  cdkDropList
+  id="canvasDropList"
+  [cdkDropListData]="fields"
+  [cdkDropListConnectedTo]="['toolboxDropList']"
+  (cdkDropListDropped)="drop($event)">
+
+  <p class="empty" *ngIf="fields.length === 0">
+    Drag a toolbox item here, or double click one to add it.
+  </p>
+
+  <div
+    class="field-card"
+    *ngFor="let field of fields; let i = index"
+    cdkDrag
+    (click)="selectField(field)"
+    (dblclick)="editField(field)"
+    [class.selected]="selectedField?.id === field.id">
+
+    <div class="field-actions">
+      <button
+        pButton
+        type="button"
+        icon="pi pi-arrow-up"
+        [text]="true"
+        (click)="moveField(i, 'up', $event)"
+        [disabled]="i === 0">
+      </button>
+
+      <button
+        pButton
+        type="button"
+        icon="pi pi-arrow-down"
+        [text]="true"
+        (click)="moveField(i, 'down', $event)"
+        [disabled]="i === fields.length - 1">
+      </button>
+      <button
+      pButton
+      type="button"
+      icon="pi pi-trash"
+      [text]="true"
+      severity="danger"
+      (click)="deleteField(field, $event)">
+      </button>
+
+    </div>
+
+    
+
+    <div
+      class="field-row"
+      [class.label-only-preview]="field.type === 'checkbox' || field.type === 'radio'">
+      <div class="label-control">
+        <input
+          pInputText
+          class="field-input field-label"
+          type="text"
+          [(ngModel)]="field.label"
+          placeholder="Label"
+          [class.invalid-label]="fieldLabelErrors[field.id]"
+          (ngModelChange)="fieldLabelChanged.emit(field)"
+          (click)="$event.stopPropagation()"
+          (dblclick)="$event.stopPropagation()" />
+        <small
+          *ngIf="fieldLabelErrors[field.id]"
+          class="label-error">
+          {{ fieldLabelErrors[field.id] }}
+        </small>
+      </div>
+
+      <input
+        *ngIf="field.type === 'text' || field.type === 'number'"
+        pInputText
+        class="field-input value-preview"
+        [type]="field.type === 'number' ? 'number' : 'text'"
+        [placeholder]="field.placeholder || 'Enter value'"
+        readonly
+        tabindex="-1" />
+
+      <div *ngIf="field.type === 'dropdown'" class="select-preview">
+        <span>Select option</span>
+        <i class="pi pi-chevron-down" aria-hidden="true"></i>
+      </div>
+
+      <div *ngIf="field.type === 'date'" class="date-preview">
+        <i class="pi pi-calendar" aria-hidden="true"></i>
+        <span>MM/DD/YYYY</span>
+      </div>
+    </div>
+  </div>
+</div>

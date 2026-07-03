@@ -1,0 +1,59 @@
+<div *ngIf="!selectedField" class="empty">
+  Select a field to edit
+</div>
+
+<div *ngIf="selectedField" class="properties-form">
+  <div class="property-group">
+    <label class="property-label">Field Type</label>
+    <div class="field-type">
+      <strong>{{ fieldTypeLabel }}</strong>
+    </div>
+  </div>
+
+  <div class="property-group">
+    <label class="property-label">Placeholder</label>
+    <input
+      pInputText
+      class="property-input"
+      [(ngModel)]="selectedField.placeholder"
+      placeholder="Enter placeholder" />
+  </div>
+
+  <div *ngIf="showOptions" class="dropdown-items property-group">
+    <label class="property-label">{{ optionsLabel }}</label>
+
+    <div
+      class="dropdown-item"
+      *ngFor="let item of selectedField.dropdownItems; let i = index; trackBy: trackByIndex">
+      <input
+        pInputText
+        class="property-input"
+        [(ngModel)]="selectedField.dropdownItems![i]"
+        placeholder="label" />
+
+      <button
+        pButton
+        type="button"
+        icon="pi pi-trash"
+        [text]="true"
+        severity="danger"
+        aria-label="Remove option"
+        (click)="removeOption(i)">
+      </button>
+    </div>
+
+    <button
+      pButton
+      type="button"
+      label="Add Option"
+      icon="pi pi-plus"
+      class="add-option"
+      (click)="addOption()">
+    </button>
+  </div>
+
+  <label class="checkbox-row property-group">
+    <p-checkbox [(ngModel)]="selectedField.required" [binary]="true"></p-checkbox>
+    <span>Required</span>
+  </label>
+</div>

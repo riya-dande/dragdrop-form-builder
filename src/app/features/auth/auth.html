@@ -1,0 +1,60 @@
+<section class="auth-page">
+  <div class="auth-panel">
+    <p class="eyebrow">Secure Access</p>
+    <h1>Login</h1>
+
+    <p class="hint" *ngIf="requestedRole === 'admin'">
+      Admin credentials are required for designer and dashboard pages.
+    </p>
+
+    <p class="hint" *ngIf="requestedRole === 'user'">
+      User credentials are required for form submission pages.
+    </p>
+
+    <form class="login-form" (ngSubmit)="signIn()" novalidate>
+      <label>
+        <span>Email or username</span>
+        <input
+          pInputText
+          type="text"
+          name="email"
+          [(ngModel)]="email"
+          (ngModelChange)="clearError()"
+          autocomplete="username"
+          required />
+      </label>
+
+      <label>
+        <span>Password</span>
+        <input
+          pInputText
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          (ngModelChange)="clearError()"
+          autocomplete="current-password"
+          required />
+      </label>
+
+      <p class="login-error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </p>
+
+      <p class="login-success" *ngIf="successMessage">
+        {{ successMessage }}
+      </p>
+
+      <button
+        pButton
+        type="submit"
+        label="Login"
+        icon="pi pi-lock">
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      New user?
+      <a routerLink="/signup">Create an account</a>
+    </p>
+  </div>
+</section>

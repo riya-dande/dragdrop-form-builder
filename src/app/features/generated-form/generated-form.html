@@ -1,0 +1,129 @@
+<p *ngIf="isLoadingCurrentForm" class="empty">
+  Loading form...
+</p>
+
+<section class="generated-form" *ngIf="!isLoadingCurrentForm && form">
+  <header class="form-header">
+    <div>
+      <p class="breadcrumb">
+        <span>Design Tools</span>
+        <span>&gt;</span>
+        <a routerLink="/dashboard">Apps</a>
+        <span>&gt;</span>
+        <a *ngIf="appId" [routerLink]="['/apps', appId, 'forms']">{{ appName }}</a>
+        <span *ngIf="!appId">{{ appName }}</span>
+        <span>&gt;</span>
+        <span>{{ form.name }}</span>
+      </p>
+      <h2>{{ form.name }}</h2>
+    </div>
+
+    <span class="form-context">
+      {{ mode === 'view' ? 'View Record' : mode === 'edit' ? 'Edit Record' : 'Generated Form' }}
+    </span>
+  </header>
+
+  <p *ngIf="submitted" class="success">
+    Response saved. The form is ready for another submission.
+  </p>
+
+  <p *ngIf="submitError" class="field-error">
+    {{ submitError }}
+  </p>
+
+  <form (ngSubmit)="submitForm()">
+    <div class="form-field" *ngFor="let field of form.fields">
+      <label class="field-label">
+        {{ field.label }}
+        <span *ngIf="field.required" class="required-star">*</span>
+      </label>
+
+      <input
+        pInputText
+        *ngIf="field.type === 'text' || field.type === 'number'"
+        [type]="field.type === 'number' ? 'number' : 'text'"
+        [(ngModel)]="values[field.id]"
+        [name]="'field-' + field.id"
+        [placeholder]="field.placeholder"
+        [class.invalid-control]="fieldErrors[field.id]"
+        (ngModelChange)="clearFieldError(field.id)"
+        [disabled]="mode === 'view'"
+        [required]="field.required" />
+
+      <div
+        class="choice-list"
+        *ngIf="field.type === 'checkbox'"
+        [class.invalid-options]="fieldErrors[field.id]">
+        <label
+          class="checkbox-field"
+          *ngFor="let option of field.dropdownItems || []">
+          <p-checkbox
+            [(ngModel)]="values[field.id]"
+            [name]="'field-' + field.id"
+            [value]="option"
+            [disabled]="mode === 'view'"
+            (ngModelChange)="clearFieldError(field.id)">
+          </p-checkbox>
+          <span>{{ option }}</span>
+        </label>
+      </div>
+
+      <div
+        class="choice-list"
+        *ngIf="field.type === 'radio'"
+        [class.invalid-options]="fieldErrors[field.id]">
+        <label
+          class="checkbox-field"
+          *ngFor="let option of field.dropdownItems || []; let i = index">
+          <p-radioButton
+            [(ngModel)]="values[field.id]"
+            [name]="'field-' + field.id"
+            [value]="option"
+            [inputId]="'field-' + field.id + '-' + i"
+            [disabled]="mode === 'view'"
+            (ngModelChange)="clearFieldError(field.id)">
+          </p-radioButton>
+          <span>{{ option }}</span>
+        </label>
+      </div>
+
+      <p-select
+        *ngIf="field.type === 'dropdown'"
+        [options]="field.dropdownItems || []"
+        [(ngModel)]="values[field.id]"
+        [name]="'field-' + field.id"
+        [class.invalid-control]="fieldErrors[field.id]"
+        (ngModelChange)="clearFieldError(field.id)"
+        [disabled]="mode === 'view'"
+        placeholder="Select">
+      </p-select>
+
+      <p-datepicker
+        *ngIf="field.type === 'date'"
+        [(ngModel)]="values[field.id]"
+        [name]="'field-' + field.id"
+        [class.invalid-control]="fieldErrors[field.id]"
+        (ngModelChange)="clearFieldError(field.id)"
+        [disabled]="mode === 'view'"
+        dateFormat="yy-mm-dd">
+      </p-datepicker>
+
+      <small class="field-error" *ngIf="fieldErrors[field.id]">
+        {{ fieldErrors[field.id] }}
+      </small>
+    </div>
+
+    <button
+      *ngIf="mode !== 'view'"
+      pButton
+      type="submit"
+      [disabled]="isSubmitting"
+      [label]="isSubmitting ? 'Saving...' : mode === 'edit' ? 'Update' : 'Save'"
+      class="submit-response-btn">
+    </button>
+  </form>
+</section>
+
+<p *ngIf="!isLoadingCurrentForm && !form" class="empty">
+  Form not found. Create and save a form first.
+</p>

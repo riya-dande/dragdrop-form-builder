@@ -1,0 +1,96 @@
+<section class="users-page">
+  <header class="users-header">
+    <div>
+      <h1>Users</h1>
+      <p>View users registered in this application.</p>
+    </div>
+
+    <button
+      type="button"
+      class="create-user-btn"
+      (click)="showCreateForm = !showCreateForm">
+      {{ showCreateForm ? 'Cancel' : 'Create User' }}
+    </button>
+  </header>
+
+  <section class="create-user-panel" *ngIf="showCreateForm">
+    <h2>Create User</h2>
+
+    <form (ngSubmit)="createUser()" class="create-user-form">
+      <label>
+        Email
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="newUserEmail"
+          placeholder="user@example.com" />
+      </label>
+
+      <label>
+        Password
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="newUserPassword"
+          placeholder="Enter password" />
+      </label>
+
+      <label>
+        Role
+        <select name="role" [(ngModel)]="newUserRole">
+          <option value="USER">USER</option>
+          <option value="ADMIN">ADMIN</option>
+        </select>
+      </label>
+
+      <button type="submit" [disabled]="isCreating">
+        {{ isCreating ? 'Creating...' : 'Create' }}
+      </button>
+    </form>
+
+    <p *ngIf="createError" class="error">{{ createError }}</p>
+    <p *ngIf="createMessage" class="success">{{ createMessage }}</p>
+  </section>
+
+  <section class="users-panel">
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+    <table *ngIf="!errorMessage">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Records</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngIf="isLoading">
+          <td colspan="5" class="empty">Loading users...</td>
+        </tr>
+
+        <tr *ngFor="let user of users">
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.recordsCount ?? 0 }}</td>
+          <td>{{ user.isActive ? 'Active' : 'Inactive' }}</td>
+          <td>
+            <button
+              type="button"
+              class="delete-user-btn"
+              (click)="deleteUser(user)"
+              [disabled]="!user.isActive || deletingUserId === user.id">
+              {{ deletingUserId === user.id ? 'Deleting...' : 'Delete' }}
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="!isLoading && users.length === 0">
+          <td colspan="5" class="empty">No users found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</section>

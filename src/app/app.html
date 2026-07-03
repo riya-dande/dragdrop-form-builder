@@ -1,0 +1,12 @@
+<div class="app-frame">
+  <div class="app-body" [class.with-sidebar]="showSidebar()">
+    <app-sidebar
+      *ngIf="showSidebar()"
+      (signOutClicked)="signOut()">
+    </app-sidebar>
+
+    <main class="app-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
