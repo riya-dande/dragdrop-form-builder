@@ -28,7 +28,7 @@ interface SignupResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly apiUrl = 'http://localhost:3000/api/v1/user';
+  private readonly apiUrl = 'https://dragdrop-backend-ies3.onrender.com/api/v1/user';
   private readonly tokenKey = 'auth_token';
   private readonly roleKey = 'auth_role';
   private readonly emailKey = 'auth_email';

@@ -23,7 +23,7 @@ type UsersResponse = {
   providedIn: 'root',
 })
 export class UserApiService {
-  private readonly apiUrl = 'http://localhost:3000/api/v1/user';
+  private readonly apiUrl = 'https://dragdrop-backend-ies3.onrender.com/api/v1/user';
   private readonly requestTimeoutMs = 8000;
 
   constructor(
