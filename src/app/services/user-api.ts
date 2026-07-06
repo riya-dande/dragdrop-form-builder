@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable, timeout } from 'rxjs';
+import { getApiBaseUrl } from '../core/api-config';
 import { AuthService } from '../core/auth/auth.service';
 
 export type UserListItem = {
@@ -23,7 +24,7 @@ type UsersResponse = {
   providedIn: 'root',
 })
 export class UserApiService {
-  private readonly apiUrl = 'https://dragdrop-backend-ies3.onrender.com/api/v1/user';
+  private readonly apiUrl = `${getApiBaseUrl()}/api/v1/user`;
   private readonly requestTimeoutMs = 8000;
 
   constructor(

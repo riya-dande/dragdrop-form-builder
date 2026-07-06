@@ -24,17 +24,21 @@
           required />
       </label>
 
-      <label>
-        <span>Password</span>
+      <div class="field">
+        <div class="password-row">
+          <label for="password">Password</label>
+          <a routerLink="/forgot-password">Forgot password?</a>
+        </div>
         <input
           pInputText
+          id="password"
           type="password"
           name="password"
           [(ngModel)]="password"
           (ngModelChange)="clearError()"
           autocomplete="current-password"
           required />
-      </label>
+      </div>
 
       <p class="login-error" *ngIf="errorMessage">
         {{ errorMessage }}

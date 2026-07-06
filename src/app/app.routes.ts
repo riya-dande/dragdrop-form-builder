@@ -19,6 +19,26 @@ export const routes: Routes = [
     component: Signup,
   },
   {
+    path: 'forgot-password',
+    loadComponent: () =>
+      import('./features/forgot-password/forgot-password').then(component => component.ForgotPassword),
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () =>
+      import('./features/reset-password/reset-password').then(component => component.ResetPassword),
+  },
+  {
+    path: 'reset-password/:token',
+    loadComponent: () =>
+      import('./features/reset-password/reset-password').then(component => component.ResetPassword),
+  },
+  {
+    path: 'resetPassword',
+    loadComponent: () =>
+      import('./features/reset-password/reset-password').then(component => component.ResetPassword),
+  },
+  {
     path: 'admin/form-builder',
     component: FormBuilder,
     canActivate: [adminOrUserGuard],

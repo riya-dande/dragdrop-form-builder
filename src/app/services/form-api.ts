@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable, timeout } from 'rxjs';
+import { getApiBaseUrl } from '../core/api-config';
 import { AuthService } from '../core/auth/auth.service';
 import { AppModel } from '../main/app-model';
 import { FieldType, FormDesign, FormModel, FormResponse } from '../main/form-model';
@@ -55,7 +56,7 @@ type RawResponseValue = {
   providedIn: 'root',
 })
 export class FormApiService {
-  private readonly apiUrl = 'https://dragdrop-backend-ies3.onrender.com/api';
+  private readonly apiUrl = `${getApiBaseUrl()}/api`;
   private readonly requestTimeoutMs = 8000;
 
   constructor(

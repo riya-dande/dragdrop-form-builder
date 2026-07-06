@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { getApiBaseUrl } from '../api-config';
 
 export type UserRole = 'admin' | 'user';
 
@@ -24,11 +25,25 @@ interface SignupResponse {
   message: string;
 }
 
+interface PasswordResetResponse {
+  error?: boolean;
+  data?: {
+    resetLink?: string | null;
+  } | null;
+  message?: string;
+}
+
+export type PasswordResetRequestResult = {
+  message: string;
+  resetLink: string | null;
+};
+
 @Injectable({
   providedIn: 'root',
 })
+
 export class AuthService {
-  private readonly apiUrl = 'https://dragdrop-backend-ies3.onrender.com/api/v1/user';
+  private readonly apiUrl = `${getApiBaseUrl()}/api/v1/user`;
   private readonly tokenKey = 'auth_token';
   private readonly roleKey = 'auth_role';
   private readonly emailKey = 'auth_email';
@@ -70,6 +85,77 @@ export class AuthService {
     }
 
     return response.data;
+  }
+
+  async requestPasswordReset(email: string): Promise<PasswordResetRequestResult> {
+    const payload = {
+      email: email.trim().toLowerCase(),
+    };
+
+    const endpoints = ['forgot-password', 'forget-password', 'forgotPassword', 'forgetPassword'];
+    let lastError: unknown;
+
+    for (const endpoint of endpoints) {
+      try {
+        const response = await firstValueFrom(
+          this.http.post<PasswordResetResponse>(`${this.apiUrl}/${endpoint}`, payload)
+        );
+
+        if (response.error) {
+          lastError = new Error(response.message || 'Unable to send reset instructions.');
+          continue;
+        }
+
+        return {
+          message: response.message || 'Password reset instructions have been sent to your email.',
+          resetLink: response.data?.resetLink || null,
+        };
+      } catch (error) {
+        lastError = new Error(this.getApiErrorMessage(error, 'Unable to send reset instructions.'));
+      }
+    }
+
+    throw lastError;
+  }
+
+  async resetPassword(token: string, password: string) {
+    const payloads = [
+      {
+        token,
+        password: password.trim(),
+      },
+      {
+        resetToken: token,
+        password: password.trim(),
+      },
+      {
+        token,
+        newPassword: password.trim(),
+      },
+    ];
+    const endpoints = ['reset-password', 'resetPassword', 'change-password'];
+    let lastError: unknown;
+
+    for (const endpoint of endpoints) {
+      for (const payload of payloads) {
+        try {
+          const response = await firstValueFrom(
+            this.http.post<PasswordResetResponse>(`${this.apiUrl}/${endpoint}`, payload)
+          );
+
+          if (response.error) {
+            lastError = new Error(response.message || 'Unable to reset password.');
+            continue;
+          }
+
+          return response.message || 'Password updated successfully. Please login.';
+        } catch (error) {
+          lastError = new Error(this.getApiErrorMessage(error, 'Unable to reset password.'));
+        }
+      }
+    }
+
+    throw lastError;
   }
 
   signOut() {
@@ -127,6 +213,18 @@ export class AuthService {
     }
 
     localStorage.removeItem(key);
+  }
+
+  private getApiErrorMessage(error: unknown, fallback: string) {
+    if (error instanceof HttpErrorResponse) {
+      const apiMessage = error.error?.message;
+
+      if (typeof apiMessage === 'string' && apiMessage.trim()) {
+        return `${fallback} Server says: ${apiMessage}.`;
+      }
+    }
+
+    return fallback;
   }
 
 }
