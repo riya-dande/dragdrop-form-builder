@@ -51,6 +51,8 @@ h1 {
 .login-form {
   display: grid;
   gap: 14px;
+  background: var(--surface);
+  color: var(--text);
 }
 
 .login-form label,
@@ -77,6 +79,8 @@ h1 {
 .login-form input {
   width: 100%;
   height: 42px;
+  background: var(--surface);
+  color: var(--text);
 }
 
 .login-error {

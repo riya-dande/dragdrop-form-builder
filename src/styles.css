@@ -1,12 +1,13 @@
 :root {
+  color-scheme: light;
   --primary: #2563eb;
   --primary-dark: #1d4ed8;
-  --background: #f8fafc;
+  --background: #ffffff;
   --surface: #ffffff;
   --sidebar-bg: #0f172a;
   --sidebar-text: #cbd5e1;
   --sidebar-active: #2563eb;
-  --text: #0f172a;
+  --text: #000000;
   --muted-text: #64748b;
   --border: #e2e8f0;
   --success: #16a34a;
@@ -32,11 +33,19 @@ body {
   min-height: 100vh;
   margin: 0;
   background: var(--app-bg);
+  color: #000000;
 }
 
 button,
 input {
   font: inherit;
+}
+
+input,
+select,
+textarea {
+  background: #ffffff;
+  color: #000000;
 }
 
 * {
@@ -60,6 +69,7 @@ p {
 .p-inputtext,
 .p-select,
 .p-datepicker .p-inputtext {
+  background: var(--app-panel);
   border-color: var(--app-border);
   color: var(--app-ink);
 }
