@@ -114,6 +114,10 @@ export class FormBuilder {
     }
   }
 
+  closeForm() {
+    this.router.navigate(this.appId ? ['/apps', this.appId, 'forms'] : ['/dashboard']);
+  }
+
   getDefaultPlaceholder(_type: FieldType): string {
     return 'placeholder';
   }
