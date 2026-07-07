@@ -128,6 +128,11 @@
 
 .value-preview {
   pointer-events: none;
+  min-height: 42px;
+  padding: 8px 0;
+  border-bottom: 2px solid #64748b;
+  color: var(--muted-text);
+  font-weight: 500;
 }
 
 .select-preview,

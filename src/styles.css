@@ -55,7 +55,7 @@ textarea,
 }
 
 :is(input, textarea, .p-inputtext, .p-datepicker-input)::placeholder {
-  color: #ffffff !important;
+  color: #64748b !important;
   opacity: 1;
 }
 

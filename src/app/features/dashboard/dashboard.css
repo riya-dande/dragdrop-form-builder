@@ -86,10 +86,6 @@ p {
   gap: 10px;
 }
 
-.toolbar-actions {
-  color: var(--text);
-}
-
 .toolbar-actions input {
   width: min(280px, 28vw);
   height: 36px;

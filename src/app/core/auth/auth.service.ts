@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, timeout } from 'rxjs';
 import { getApiBaseUrl } from '../api-config';
 
 export type UserRole = 'admin' | 'user';
@@ -92,30 +92,24 @@ export class AuthService {
       email: email.trim().toLowerCase(),
     };
 
-    const endpoints = ['forgot-password', 'forget-password', 'forgotPassword', 'forgetPassword'];
-    let lastError: unknown;
+    try {
+      const response = await firstValueFrom(
+        this.http.post<PasswordResetResponse>(`${this.apiUrl}/forgot-password`, payload).pipe(
+          timeout(15000)
+        )
+      );
 
-    for (const endpoint of endpoints) {
-      try {
-        const response = await firstValueFrom(
-          this.http.post<PasswordResetResponse>(`${this.apiUrl}/${endpoint}`, payload)
-        );
-
-        if (response.error) {
-          lastError = new Error(response.message || 'Unable to send reset instructions.');
-          continue;
-        }
-
-        return {
-          message: response.message || 'Password reset instructions have been sent to your email.',
-          resetLink: response.data?.resetLink || null,
-        };
-      } catch (error) {
-        lastError = new Error(this.getApiErrorMessage(error, 'Unable to send reset instructions.'));
+      if (response.error) {
+        throw new Error(response.message || 'Unable to send reset instructions.');
       }
-    }
 
-    throw lastError;
+      return {
+        message: response.message || 'Password reset instructions have been sent to your email.',
+        resetLink: response.data?.resetLink || null,
+      };
+    } catch (error) {
+      throw new Error(this.getApiErrorMessage(error, 'Unable to send reset instructions.'));
+    }
   }
 
   async resetPassword(token: string, password: string) {

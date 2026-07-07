@@ -115,7 +115,7 @@ export class FormBuilder {
   }
 
   getDefaultPlaceholder(_type: FieldType): string {
-    return '';
+    return 'placeholder';
   }
 
   private hasOptions(type: FieldType) {
