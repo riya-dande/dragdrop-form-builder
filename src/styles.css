@@ -45,7 +45,26 @@ input,
 select,
 textarea {
   background: #ffffff;
+  caret-color: #000000;
   color: #000000;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+.p-inputtext:enabled:focus {
+  background: #ffffff;
+  color: #000000;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  -webkit-text-fill-color: #000000;
+  caret-color: #000000;
+  transition: background-color 9999s ease-out;
 }
 
 * {
