@@ -1,0 +1,1 @@
+var t="Password must be at least 8 characters and include a letter, a number, and a special character.";function r(a){return/^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/.test(a.trim())}export{t as a,r as b};

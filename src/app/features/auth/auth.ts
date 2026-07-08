@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../../core/auth/auth.service';
+import { gmailOnlyMessage, isGmailAddress } from '../../core/gmail-validation';
 
 @Component({
   selector: 'app-auth',
@@ -41,6 +42,11 @@ export class Auth {
   }
 
   async signIn() {
+    if (!isGmailAddress(this.email)) {
+      this.errorMessage = gmailOnlyMessage;
+      return;
+    }
+
     try {
       const role = await this.auth.signIn(this.email, this.password);
 

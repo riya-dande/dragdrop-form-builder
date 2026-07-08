@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../../core/auth/auth.service';
+import { gmailOnlyMessage, isGmailAddress } from '../../core/gmail-validation';
 
 @Component({
   selector: 'app-forgot-password',
@@ -28,6 +29,11 @@ export class ForgotPassword {
 
     if (!email) {
       this.errorMessage = 'Email is required.';
+      return;
+    }
+
+    if (!isGmailAddress(email)) {
+      this.errorMessage = gmailOnlyMessage;
       return;
     }
 

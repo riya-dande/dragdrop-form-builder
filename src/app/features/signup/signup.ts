@@ -5,6 +5,8 @@ import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../../core/auth/auth.service';
+import { gmailOnlyMessage, isGmailAddress } from '../../core/gmail-validation';
+import { isStrongPassword, strongPasswordMessage } from '../../core/password-validation';
 
 @Component({
   selector: 'app-signup',
@@ -30,6 +32,16 @@ export class Signup {
 
     if (!email || !password) {
       this.errorMessage = 'Email and password are required.';
+      return;
+    }
+
+    if (!isGmailAddress(email)) {
+      this.errorMessage = gmailOnlyMessage;
+      return;
+    }
+
+    if (!isStrongPassword(password)) {
+      this.errorMessage = strongPasswordMessage;
       return;
     }
 

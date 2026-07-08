@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
+import { gmailOnlyMessage, isGmailAddress } from '../../core/gmail-validation';
+import { isStrongPassword, strongPasswordMessage } from '../../core/password-validation';
 import { UserApiService, UserListItem } from '../../services/user-api';
 
 @Component({
@@ -56,6 +58,16 @@ export class Users implements OnInit {
 
     if (!email || !password) {
       this.createError = 'Email and password are required.';
+      return;
+    }
+
+    if (!isGmailAddress(email)) {
+      this.createError = gmailOnlyMessage;
+      return;
+    }
+
+    if (!isStrongPassword(password)) {
+      this.createError = strongPasswordMessage;
       return;
     }
 

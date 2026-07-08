@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../../core/auth/auth.service';
+import { isStrongPassword, strongPasswordMessage } from '../../core/password-validation';
 
 @Component({
   selector: 'app-reset-password',
@@ -47,6 +48,11 @@ export class ResetPassword {
 
     if (!password || !confirmPassword) {
       this.errorMessage = 'Password and confirmation are required.';
+      return;
+    }
+
+    if (!isStrongPassword(password)) {
+      this.errorMessage = strongPasswordMessage;
       return;
     }
 
