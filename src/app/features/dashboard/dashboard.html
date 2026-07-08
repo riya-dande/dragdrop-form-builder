@@ -51,9 +51,6 @@
           </div>
           <div class="app-title">
             <h3>{{ app.name }}</h3>
-            <small>
-              {{ getFormsCount(app.id) }} saved forms
-            </small>
           </div>
         </div>
 
@@ -97,14 +94,8 @@
 
       <footer class="app-card-bottom">
         <div class="app-meta">
-          <span>{{ app.type }}</span>
           <time>Updated {{ formatAppDate(app.createdAt) }}</time>
         </div>
-
-        <strong class="app-form-count">
-          <i class="pi pi-file"></i>
-          {{ getFormsCount(app.id) }} forms
-        </strong>
       </footer>
     </article>
   </section>
