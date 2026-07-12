@@ -128,6 +128,7 @@ export class Dashboard implements OnInit {
   }
 
   createApp() {
+    this.formState.setCurrentForm(null);
     this.router.navigate(['/admin/form-builder']);
   }
 
