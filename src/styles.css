@@ -128,3 +128,18 @@ p {
   border-radius: 6px;
   font-weight: 700;
 }
+
+::ng-deep .designer-area app-canvas .cdk-drop-list.canvas-wrapper{
+
+     max-height: calc(100vh - 177px);
+
+     overflow: auto;
+
+ }
+ .apps-grid{
+
+     max-height: calc(100vh - 150px);
+
+     overflow: auto;
+
+     }

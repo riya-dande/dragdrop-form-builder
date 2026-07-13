@@ -24,3 +24,4 @@ export class Toolbox {
     this.fieldAdded.emit(type);
   }
 }
+

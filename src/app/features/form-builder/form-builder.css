@@ -31,7 +31,12 @@
   min-width: 0;
   min-height: 0;
   padding: 34px 34px 32px;
-  overflow-y: auto;
+  overflow: hidden;
+}
+
+:host ::ng-deep .designer-area app-canvas .cdk-drop-list.canvas-wrapper {
+  max-height: calc(100vh - 177px);
+  overflow: auto;
 }
 
 .designer-header {
