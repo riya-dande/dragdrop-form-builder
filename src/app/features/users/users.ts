@@ -17,7 +17,7 @@ export class Users implements OnInit {
   isLoading = true;
   isCreating = false;
   deletingUserId = '';
-  showCreateForm = true;
+  showCreateForm = false;
   errorMessage = '';
   createMessage = '';
   createError = '';

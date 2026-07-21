@@ -3,7 +3,8 @@
   align-content: start;
   gap: 26px;
   min-height: 540px;
-  padding: 34px 32px;
+  padding: 34px 32px 56px;
+  scroll-padding-bottom: 32px;
   border: 1.5px dashed #9fb4d7;
   border-radius: 10px;
   background: var(--surface);
